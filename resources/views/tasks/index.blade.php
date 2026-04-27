@@ -12,6 +12,11 @@
         <td>{{$task->content}}</td>
         <td>
             <a href="{{route('tasks.edit',$task->id)}}">編集</a>
+            <form action="{{route('tasks.destroy',$task->id)}}" method="post" style="display: inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+            </form>
         </td>
     </tr>
     @endforeach
