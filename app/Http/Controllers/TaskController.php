@@ -23,4 +23,17 @@ class TaskController extends Controller
         ]);
         return redirect()->route('tasks.index');
     }
+
+    public function edit(Task $task){
+        return view('tasks.edit',compact('task'));
+    }
+
+    public function update(Request $request,Task $task){
+        $task->update([
+            'title'=>$request->title,
+            'content'=>$request->content,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
 }
