@@ -1,3 +1,12 @@
+<h1>タスク編集</h1>
+@if($errors->any())
+<ul>
+    @foreach($errors->all() as $error)
+    <li style="color: red;">{{$error}}</li>
+    @endforeach
+</ul>
+@endif
+
 <form action="{{route('tasks.update,$task->id')}}" method="post">
     @csrf
     @method('PUT')
