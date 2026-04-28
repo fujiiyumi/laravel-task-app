@@ -25,7 +25,7 @@ class TaskController extends Controller
         Task::create([
             'title'=>$request->title,
             'content'=>$request->content,
-            'user_id'=>1
+            'user_id'=>1,
         ]);
         return redirect()->route('tasks.index');
     }
