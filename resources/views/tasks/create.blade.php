@@ -1,3 +1,4 @@
+<x-app-layout>
 <h1>タスク追加</h1> 
 
 @if($errors->any())
@@ -23,3 +24,5 @@
 
     <button type="submit">保存</button>
 </form>
+
+</x-app-layout>

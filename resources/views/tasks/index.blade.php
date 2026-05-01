@@ -1,3 +1,8 @@
+<x-app-layout>
+
+<a href="{{route('tasks.create')}}">新規登録</a>
+<br><br>
+
 <table border="1">
     <tr>
         <th>ID</th>
@@ -21,3 +26,5 @@
     </tr>
     @endforeach
 </table>
+
+</x-app-layout>

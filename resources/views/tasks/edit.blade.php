@@ -1,3 +1,4 @@
+<x-app-layout>
 <h1>タスク編集</h1>
 @if($errors->any())
 <ul>
@@ -7,7 +8,7 @@
 </ul>
 @endif
 
-<form action="{{route('tasks.update,$task->id')}}" method="post">
+<form action="{{route('tasks.update',$task->id)}}" method="post">
     @csrf
     @method('PUT')
     <div>
@@ -21,3 +22,5 @@
     
     <button type="submit">更新</button>
 </form>
+
+</x-app-layout>
