@@ -12,6 +12,11 @@
         </div>
     </x-slot>
 
+    <form action="{{route('tasks.index')}}" method="get">
+        <input type="text" name="keyword" value="{{request('keyword')}}" placeholder="タイトル検索">
+        <button type="submit">検索</button>
+    </form>
+
     <div class="py-6">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm rounded-xl overflow-hidden">

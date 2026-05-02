@@ -7,8 +7,15 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    public function index(){
-        $tasks=Task::where('user_id',auth()->id())->get();
+    public function index(Request $request){
+        $query=Task::where('user_id',auth()->id());
+        
+        if($request->filled('keyword')){
+            $query->where('title','like','%'.$request->keyword.'%');
+        }
+
+        $tasks=$query->get();
+
         return view('tasks.index',compact('tasks'));
     }
 
