@@ -22,6 +22,15 @@
         <textarea id="content" name="content" placeholder="内容を入力してください">{{old('content')}}</textarea>
     </div>
 
+    <div>
+        <label for="status">ステータス</label>
+        <select name="status" id="status">
+            <option value="未着手">未着手</option>
+            <option value="進行中">進行中</option>
+            <option value="完了">完了</option>
+        </select>
+    </div>
+
     <button type="submit">保存</button>
 </form>
 
