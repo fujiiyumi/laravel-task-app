@@ -20,6 +20,11 @@
             <option value="進行中"@selected(request('status')==='進行中')>進行中</option>
             <option value="完了" @selected(request('status')==='完了')>完了</option>
         </select>
+        <select name="sort">
+            <option value="">並び替え</option>
+            <option value="latest"@selected(request('sort')==='latest')>新しい順</option>
+            <option value="oldest" @selected(request('sort')==='oldest')>古い順</option>
+        </select>
         <button type="submit">検索</button>
     </form>
 

@@ -18,6 +18,15 @@ class TaskController extends Controller
             $query->where('status',$request->status);
         }
 
+        if($request->filled('sort')){
+            if($request->sort === 'latest'){
+                $query->orderBy('created_at','desc');
+            }
+            if($request->sort === 'oldest'){
+                $query->orderBy('created_at','asc');
+            }
+        }
+
         $tasks=$query->get();
 
         return view('tasks.index',compact('tasks'));
