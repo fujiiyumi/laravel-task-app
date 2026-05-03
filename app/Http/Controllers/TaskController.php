@@ -27,7 +27,7 @@ class TaskController extends Controller
             }
         }
 
-        $tasks=$query->get();
+        $tasks=$query->paginate(5)->withQueryString();
 
         return view('tasks.index',compact('tasks'));
     }
