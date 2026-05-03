@@ -14,6 +14,10 @@ class TaskController extends Controller
             $query->where('title','like','%'.$request->keyword.'%');
         }
 
+        if($request->filled('status')){
+            $query->where('status',$request->status);
+        }
+
         $tasks=$query->get();
 
         return view('tasks.index',compact('tasks'));

@@ -14,6 +14,12 @@
 
     <form action="{{route('tasks.index')}}" method="get">
         <input type="text" name="keyword" value="{{request('keyword')}}" placeholder="タイトル検索">
+        <select name="status">
+            <option value="">すべて</option>
+            <option value="未着手"@selected(request('status')==='未着手')>未着手</option>
+            <option value="進行中"@selected(request('status')==='進行中')>進行中</option>
+            <option value="完了" @selected(request('status')==='完了')>完了</option>
+        </select>
         <button type="submit">検索</button>
     </form>
 
@@ -26,6 +32,7 @@
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">タイトル</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">コンテント</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ステータス</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
                         </tr>
                     </thead>
@@ -35,6 +42,7 @@
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">{{ $task->title }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">{{ $task->content }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{{ $task->status }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2">
                                         <a href="{{ route('tasks.edit', $task) }}"
