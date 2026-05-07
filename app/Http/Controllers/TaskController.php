@@ -7,83 +7,90 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    public function index(Request $request){
-        $query=Task::where('user_id',auth()->id());
-        
-        if($request->filled('keyword')){
-            $query->where('title','like','%'.$request->keyword.'%');
+    public function index(Request $request)
+    {
+        $query = Task::where('user_id', auth()->id());
+
+        if ($request->filled('keyword')) {
+            $query->where('title', 'like', '%' . $request->keyword . '%');
         }
 
-        if($request->filled('status')){
-            $query->where('status',$request->status);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
         }
 
-        if($request->filled('sort')){
-            if($request->sort === 'latest'){
-                $query->orderBy('created_at','desc');
+        if ($request->filled('sort')) {
+            if ($request->sort === 'latest') {
+                $query->orderBy('created_at', 'desc');
             }
-            if($request->sort === 'oldest'){
-                $query->orderBy('created_at','asc');
+            if ($request->sort === 'oldest') {
+                $query->orderBy('created_at', 'asc');
             }
         }
 
-        $tasks=$query->paginate(5)->withQueryString();
+        $tasks = $query->paginate(5)->withQueryString();
 
-        return view('tasks.index',compact('tasks'));
+        return view('tasks.index', compact('tasks'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('tasks.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
-            'title'=>'required|max:255',
-            'content'=>'nullable|max:1000',
-            'status'=>'required|in:未着手,進行中,完了'
+            'title' => 'required|max:255',
+            'content' => 'nullable|max:1000',
+            'status' => 'required|in:未着手,進行中,完了'
         ]);
 
         Task::create([
-            'title'=>$request->title,
-            'content'=>$request->content,
-            'user_id'=>auth()->id(),
-            'status'=>$request->status,
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => auth()->id(),
+            'status' => $request->status,
         ]);
         return redirect()->route('tasks.index');
     }
 
-    public function edit(Task $task){
+    public function edit(Task $task)
+    {
         $this->authorizeTask($task);
-        return view('tasks.edit',compact('task'));
+        return view('tasks.edit', compact('task'));
     }
 
-    public function update(Request $request,Task $task){
+    public function update(Request $request, Task $task)
+    {
         $this->authorizeTask($task);
 
         $request->validate([
-            'title'=>'required|max:225',
-            'content'=>'nullable|max:1000',
-            'status'=>'required|in:未着手,進行中,完了',
+            'title' => 'required|max:225',
+            'content' => 'nullable|max:1000',
+            'status' => 'required|in:未着手,進行中,完了',
         ]);
 
         $task->update([
-            'title'=>$request->title,
-            'content'=>$request->content,
-            'status'=>$request->status,
+            'title' => $request->title,
+            'content' => $request->content,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('tasks.index');
     }
 
-    public function destroy(Task $task){
+    public function destroy(Task $task)
+    {
         $this->authorizeTask($task);
 
         $task->delete();
         return redirect()->route('tasks.index');
     }
 
-    private function authorizeTask(Task $task){
-        if($task->user_id !== auth()->id()){
+    private function authorizeTask(Task $task)
+    {
+        if ($task->user_id !== auth()->id()) {
             abort(403);
         }
     }
