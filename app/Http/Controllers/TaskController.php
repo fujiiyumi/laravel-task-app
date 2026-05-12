@@ -9,24 +9,18 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Task::where('user_id', auth()->id());
+        $query = Task::query();
 
-        if ($request->filled('keyword')) {
-            $query->where('title', 'like', '%' . $request->keyword . '%');
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('sort')) {
-            if ($request->sort === 'latest') {
-                $query->orderBy('created_at', 'desc');
-            }
-            if ($request->sort === 'oldest') {
-                $query->orderBy('created_at', 'asc');
-            }
-        }
+        $query->where('user_id',auth()->id())
+        ->when($request->keyword,function ($query,$keyword) {
+            $query->where('title','like',"%{$keyword}%");
+        })
+        ->when($request->status,function($query, $status) {
+            $query->where('status',$status);
+        })
+        ->when($request->sort,function ($query, $sort) {
+            $query->orderBy('created_at',$sort);
+        });
 
         $tasks = $query->paginate(5)->withQueryString();
 

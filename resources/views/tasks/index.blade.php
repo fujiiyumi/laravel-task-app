@@ -22,8 +22,8 @@
         </select>
         <select name="sort">
             <option value="">並び替え</option>
-            <option value="latest" @selected(request('sort')==='latest' )>新しい順</option>
-            <option value="oldest" @selected(request('sort')==='oldest' )>古い順</option>
+            <option value="desc" @selected(request('sort')==='desc' )>新しい順</option>
+            <option value="asc" @selected(request('sort')==='asc' )>古い順</option>
         </select>
         <button type="submit">検索</button>
     </form>
