@@ -1,15 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                タスク一覧
-            </h2>
+        <div class="flex justify-between items-center">
+        <h2>
+            タスク一覧
+        </h2>
 
-            <a href="{{ route('tasks.create') }}"
-                class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                ＋新規登録
-            </a>
-        </div>
+        <a href="{{ route('tasks.create') }}">
+            ＋新規登録
+        </a>
+</div>
     </x-slot>
 
     <form action="{{route('tasks.index')}}" method="get">
@@ -28,52 +27,42 @@
         <button type="submit">検索</button>
     </form>
 
-    <div class="py-6">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm rounded-xl overflow-hidden">
 
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">タイトル</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">コンテント</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ステータス</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
-                        </tr>
-                    </thead>
+    <table>
+        <thead class="bg-gray-50">
+            <tr>
+                <th>タイトル</th>
+                <th>内容</th>
+                <th>ステータス</th>
+                <th>操作</th>
+            </tr>
+        </thead>
 
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($tasks as $task)
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $task->title }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $task->content }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $task->status }}</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-2">
-                                    <a href="{{ route('tasks.edit', $task) }}"
-                                        class="px-3 py-1 text-sm bg-amber-500 text-white rounded-md hover:bg-amber-600 transition">
-                                        編集
-                                    </a>
+        <tbody>
+            @foreach($tasks as $task)
+            <tr>
+                <td>{{ $task->title }}</td>
+                <td>{{ $task->content }}</td>
+                <td>{{ $task->status }}</td>
+                <td>
+                    <a href="{{ route('tasks.edit', $task) }}">
+                        編集
+                    </a>
 
-                                    <form action="{{ route('tasks.destroy', $task) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-                                            onclick="return confirm('本当に削除しますか?')">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                    <form action="{{ route('tasks.destroy', $task) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            onclick="return confirm('本当に削除しますか?')">
+                            削除
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-                {{$tasks->links()}}
+    {{$tasks->links()}}
 
-            </div>
-        </div>
-    </div>
 </x-app-layout>
