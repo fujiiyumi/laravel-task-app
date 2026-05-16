@@ -1,14 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-        <h2>
-            タスク一覧
-        </h2>
+            <h2>
+                タスク一覧
+            </h2>
 
-        <a href="{{ route('tasks.create') }}">
-            ＋新規登録
-        </a>
-</div>
+            <a href="{{ route('tasks.create') }}">
+                ＋新規登録
+            </a>
+        </div>
+
     </x-slot>
 
     <form action="{{route('tasks.index')}}" method="get">
@@ -29,7 +30,7 @@
 
 
     <table>
-        <thead class="bg-gray-50">
+        <thead>
             <tr>
                 <th>タイトル</th>
                 <th>内容</th>

@@ -38,18 +38,16 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|max:255',
             'content' => 'nullable|max:1000',
             'status' => 'required|in:未着手,進行中,完了'
         ]);
 
-        Task::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'user_id' => auth()->id(),
-            'status' => $request->status,
-        ]);
+        $validated['user_id'] = auth()->id();
+
+        Task::create($validated);
+
         return redirect()->route('tasks.index');
     }
 
@@ -63,17 +61,13 @@ class TaskController extends Controller
     {
         $this->authorizeTask($task);
 
-        $request->validate([
-            'title' => 'required|max:225',
+        $validated = $request->validate([
+            'title' => 'required|max:255',
             'content' => 'nullable|max:1000',
             'status' => 'required|in:未着手,進行中,完了',
         ]);
 
-        $task->update([
-            'title' => $request->title,
-            'content' => $request->content,
-            'status' => $request->status,
-        ]);
+        $task->update($validated);
 
         return redirect()->route('tasks.index');
     }
@@ -83,7 +77,8 @@ class TaskController extends Controller
         $this->authorizeTask($task);
 
         $task->delete();
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index');
     }
 
     private function authorizeTask(Task $task)
