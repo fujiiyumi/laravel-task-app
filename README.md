@@ -50,3 +50,4 @@ Laravelで作成したタスク管理アプリです。
 - 認可処理
 - ページネーションtrigger deploy
 deploy trigger
+trigger
